@@ -124,15 +124,21 @@ class VideoProcessor(VideoProcessorBase):
 st.title("Sistem Absensi Online")
 
 # Konfigurasi WebRTC (PERBAIKAN DI SINI)
+# Konfigurasi WebRTC
 ctx = webrtc_streamer(
     key="absensi-facenet",
-    mode=WebRtcMode.SENDRECV, # Perbaikan: f.WebRtcMode -> WebRtcMode
-    rtc_configuration=RTCConfiguration({"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]}),
+    mode=WebRtcMode.SENDRECV,
+    rtc_configuration=RTCConfiguration({
+        "iceServers": [
+            {"urls": ["stun:stun.l.google.com:19302"]},
+            {"urls": ["stun:stun1.l.google.com:19302"]},
+            {"urls": ["stun:stun2.l.google.com:19302"]},
+        ]
+    }),
     video_processor_factory=VideoProcessor,
     media_stream_constraints={"video": True, "audio": False},
     async_processing=True,
 )
-
 # --- PANEL PENCATATAN ---
 if ctx.video_processor:
     status = ctx.video_processor.status
@@ -161,3 +167,4 @@ if ctx.video_processor:
                 
                 # Reset
                 ctx.video_processor.status = "idle"
+
