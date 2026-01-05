@@ -1,0 +1,8 @@
+streamlit
+streamlit-webrtc
+opencv-python-headless
+numpy
+scikit-learn
+keras-facenet
+tensorflow-cpu
+av
